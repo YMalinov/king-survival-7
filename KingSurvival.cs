@@ -6,15 +6,15 @@ namespace KingSurvival
     {
         // for git connection test *will be removed
         static int size = 8;
-        static Coordinates car = new Coordinates(4, 3);
+        static Coordinates king = new Coordinates(4, 3);
 
-        static Coordinates peshkaA = new Coordinates(1, 0);
+        static Coordinates pawnA = new Coordinates(1, 0);
         
-        static Coordinates peshkaB = new Coordinates(3, 0);
+        static Coordinates pawnB = new Coordinates(3, 0);
         
-        static Coordinates peshkaC = new Coordinates(5, 0);
+        static Coordinates pawnC = new Coordinates(5, 0);
         
-        static Coordinates peshkaD = new Coordinates(7, 0);
+        static Coordinates pawnD = new Coordinates(7, 0);
         
         static bool flag = true;
 
@@ -62,7 +62,7 @@ namespace KingSurvival
         static void Try(int dirX, int dirY, char[,] gameBoard)
         {
 
-            if (car.X + dirX < 0 || car.X + dirX > size - 1)
+            if (king.X + dirX < 0 || king.X + dirX > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -71,7 +71,7 @@ namespace KingSurvival
                 return;
             }
 
-            if (car.Y + dirY < 0 || car.Y + dirY > size - 1)
+            if (king.Y + dirY < 0 || king.Y + dirY > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -79,36 +79,36 @@ namespace KingSurvival
                 flag = true;
                 return;
             }
-            if (gameBoard[car.Y + dirY, car.X + dirX] == 'A') 
+            if (gameBoard[king.Y + dirY, king.X + dirX] == 'A') 
             {
-                gameBoard[car.Y + dirY, car.X + dirX] = 'K';
-                gameBoard[peshkaA.Y, peshkaA.X] = '-';
+                gameBoard[king.Y + dirY, king.X + dirX] = 'K';
+                gameBoard[pawnA.Y, pawnA.X] = '-';
             }
-            if (gameBoard[car.Y + dirY, car.X + dirX] == 'B')
+            if (gameBoard[king.Y + dirY, king.X + dirX] == 'B')
             {
-                gameBoard[car.Y + dirY, car.X + dirX] = 'K';
-                gameBoard[peshkaB.Y, peshkaB.X] = '-';
+                gameBoard[king.Y + dirY, king.X + dirX] = 'K';
+                gameBoard[pawnB.Y, pawnB.X] = '-';
             }
-            if (gameBoard[car.Y + dirY, car.X + dirX] == 'C')
+            if (gameBoard[king.Y + dirY, king.X + dirX] == 'C')
             {
-                gameBoard[car.Y + dirY, car.X + dirX] = 'K';
-                gameBoard[peshkaC.Y, peshkaC.X] = '-';
+                gameBoard[king.Y + dirY, king.X + dirX] = 'K';
+                gameBoard[pawnC.Y, pawnC.X] = '-';
             }
-            if (gameBoard[car.Y + dirY, car.X + dirX] == 'D')
+            if (gameBoard[king.Y + dirY, king.X + dirX] == 'D')
             {
-                gameBoard[car.Y + dirY, car.X + dirX] = 'K';
-                gameBoard[peshkaD.Y, peshkaD.X] = '-';
+                gameBoard[king.Y + dirY, king.X + dirX] = 'K';
+                gameBoard[pawnD.Y, pawnD.X] = '-';
             }
-            gameBoard[car.Y, car.X] = '-';
-            gameBoard[car.Y + dirY, car.X + dirX] = 'K';
-            car.Y += dirY;
-            car.X += dirX;
+            gameBoard[king.Y, king.X] = '-';
+            gameBoard[king.Y + dirY, king.X + dirX] = 'K';
+            king.Y += dirY;
+            king.X += dirX;
             return;
         }
 
         static bool PawnAMove(int dirX, int dirY, char[,] matrix)
         {
-            if (peshkaA.X + dirX < 0 || peshkaA.X + dirX > size - 1)
+            if (pawnA.X + dirX < 0 || pawnA.X + dirX > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -118,7 +118,7 @@ namespace KingSurvival
                 
             }
 
-            if (peshkaA.Y + dirY < 0 || peshkaA.Y + dirY > size - 1)
+            if (pawnA.Y + dirY < 0 || pawnA.Y + dirY > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -126,14 +126,14 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            if (matrix[peshkaA.Y + dirY, peshkaA.X + dirX] == 'K')
+            if (matrix[pawnA.Y + dirY, pawnA.X + dirX] == 'K')
             {
                 Console.WriteLine("Pawn's win!");
                 return true;
             }
-            if (matrix[peshkaA.Y + dirY, peshkaA.X + dirX] == 'D' || 
-                matrix[peshkaA.Y + dirY, peshkaA.X + dirX] == 'B' || 
-                matrix[peshkaA.Y + dirY, peshkaA.X + dirX] == 'C')
+            if (matrix[pawnA.Y + dirY, pawnA.X + dirX] == 'D' || 
+                matrix[pawnA.Y + dirY, pawnA.X + dirX] == 'B' || 
+                matrix[pawnA.Y + dirY, pawnA.X + dirX] == 'C')
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -142,15 +142,15 @@ namespace KingSurvival
                 return false;
             }
            
-            matrix[peshkaA.Y, peshkaA.X] = '-';
-            matrix[peshkaA.Y + dirY, peshkaA.X + dirX] = 'A';
-            peshkaA.Y += dirY;
-            peshkaA.X += dirX;
+            matrix[pawnA.Y, pawnA.X] = '-';
+            matrix[pawnA.Y + dirY, pawnA.X + dirX] = 'A';
+            pawnA.Y += dirY;
+            pawnA.X += dirX;
             return false;
         }
         static bool PawnBMove(int dirX, int dirY, char[,] matrix)
         {//za dokumentaciq pregledai PawnAMove
-            if (peshkaB.X + dirX < 0 || peshkaB.X + dirX > size - 1)
+            if (pawnB.X + dirX < 0 || pawnB.X + dirX > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -159,7 +159,7 @@ namespace KingSurvival
                 return false;
             }
 
-            if (peshkaB.Y + dirY < 0 || peshkaB.Y + dirY > size - 1)
+            if (pawnB.Y + dirY < 0 || pawnB.Y + dirY > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -167,15 +167,15 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            if (matrix[peshkaB.Y + dirY, peshkaB.X + dirX] == 'K')
+            if (matrix[pawnB.Y + dirY, pawnB.X + dirX] == 'K')
             {
                 Console.WriteLine("Pawn's win!");
                 return true;
             }
 
-            if (matrix[peshkaB.Y + dirY, peshkaB.X + dirX] == 'A' || 
-                matrix[peshkaB.Y + dirY, peshkaB.X + dirX] == 'C' || 
-                matrix[peshkaB.Y + dirY, peshkaB.X + dirX] == 'D')
+            if (matrix[pawnB.Y + dirY, pawnB.X + dirX] == 'A' || 
+                matrix[pawnB.Y + dirY, pawnB.X + dirX] == 'C' || 
+                matrix[pawnB.Y + dirY, pawnB.X + dirX] == 'D')
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -183,15 +183,15 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            matrix[peshkaB.Y, peshkaB.X] = '-';
-            matrix[peshkaB.Y + dirY, peshkaB.X + dirX] = 'B';
-            peshkaB.Y += dirY;
-            peshkaB.X += dirX;
+            matrix[pawnB.Y, pawnB.X] = '-';
+            matrix[pawnB.Y + dirY, pawnB.X + dirX] = 'B';
+            pawnB.Y += dirY;
+            pawnB.X += dirX;
             return false;
         }
         static bool PawnCMove(int dirX, int dirY, char[,] matrix)
         {//za dokumentaciq pregledai PawnAMove
-            if (peshkaC.X + dirX < 0 || peshkaC.X + dirX > size - 1)
+            if (pawnC.X + dirX < 0 || pawnC.X + dirX > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -199,7 +199,7 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            if (peshkaC.Y + dirY < 0 || peshkaC.Y + dirY > size - 1)
+            if (pawnC.Y + dirY < 0 || pawnC.Y + dirY > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -207,14 +207,14 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            if (matrix[peshkaC.Y + dirY, peshkaC.X + dirX] == 'K')
+            if (matrix[pawnC.Y + dirY, pawnC.X + dirX] == 'K')
             {
                 Console.WriteLine("Pawn's win!");
                 return true;
             }
-            if (matrix[peshkaC.Y + dirY, peshkaC.X + dirX] == 'A' || 
-                matrix[peshkaC.Y + dirY, peshkaC.X + dirX] == 'B' || 
-                matrix[peshkaC.Y + dirY, peshkaC.X + dirX] == 'D')
+            if (matrix[pawnC.Y + dirY, pawnC.X + dirX] == 'A' || 
+                matrix[pawnC.Y + dirY, pawnC.X + dirX] == 'B' || 
+                matrix[pawnC.Y + dirY, pawnC.X + dirX] == 'D')
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -223,15 +223,15 @@ namespace KingSurvival
                 return false;
             }
 
-            matrix[peshkaC.Y, peshkaC.X] = '-';
-            matrix[peshkaC.Y + dirY, peshkaC.X + dirX] = 'C';
-            peshkaC.Y += dirY;
-            peshkaC.X += dirX;
+            matrix[pawnC.Y, pawnC.X] = '-';
+            matrix[pawnC.Y + dirY, pawnC.X + dirX] = 'C';
+            pawnC.Y += dirY;
+            pawnC.X += dirX;
             return false;
         }
         static bool PawnDMove(int dirX, int dirY, char[,] matrix)
         {//za dokumentaciq pregledai PawnAMove
-            if (peshkaD.Y + dirY < 0 || peshkaD.Y + dirY > size - 1)
+            if (pawnD.Y + dirY < 0 || pawnD.Y + dirY > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -240,7 +240,7 @@ namespace KingSurvival
                 return false;
             }
 
-            if (peshkaD.X + dirX < 0 || peshkaD.X + dirX > size - 1)
+            if (pawnD.X + dirX < 0 || pawnD.X + dirX > size - 1)
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -248,14 +248,14 @@ namespace KingSurvival
                 flag = false;
                 return false;
             }
-            if (matrix[peshkaD.Y + dirY, peshkaD.X + dirX] == 'K')
+            if (matrix[pawnD.Y + dirY, pawnD.X + dirX] == 'K')
             {
                 Console.WriteLine("Pawn's win!");
                 return true;
             }
-            if (matrix[peshkaD.Y + dirY, peshkaD.X + dirX] == 'A' || 
-                matrix[peshkaD.Y + dirY, peshkaD.X + dirX] == 'B' || 
-                matrix[peshkaD.Y + dirY, peshkaD.X + dirX] == 'C')
+            if (matrix[pawnD.Y + dirY, pawnD.X + dirX] == 'A' || 
+                matrix[pawnD.Y + dirY, pawnD.X + dirX] == 'B' || 
+                matrix[pawnD.Y + dirY, pawnD.X + dirX] == 'C')
             {
                 Console.WriteLine("Invalid Move!");
                 Console.WriteLine("**Press a key to continue**");
@@ -264,21 +264,21 @@ namespace KingSurvival
                 return false;
             }
 
-            matrix[peshkaD.Y, peshkaD.X] = '-';
-            matrix[peshkaD.Y + dirY, peshkaD.X + dirX] = 'D';
-            peshkaD.Y += dirY;
-            peshkaD.X += dirX;
+            matrix[pawnD.Y, pawnD.X] = '-';
+            matrix[pawnD.Y + dirY, pawnD.X + dirX] = 'D';
+            pawnD.Y += dirY;
+            pawnD.X += dirX;
             return false;
         }
 
         static void Main()
         {
-            board[peshkaA.Y, peshkaA.X] = 'A';
-            board[peshkaB.Y, peshkaB.X] = 'B';
-            board[peshkaC.Y, peshkaC.X] = 'C';
-            board[peshkaD.Y, peshkaD.X] = 'D';
+            board[pawnA.Y, pawnA.X] = 'A';
+            board[pawnB.Y, pawnB.X] = 'B';
+            board[pawnC.Y, pawnC.X] = 'C';
+            board[pawnD.Y, pawnD.X] = 'D';
 
-            board[car.Y, car.X] = 'K';
+            board[king.Y, king.X] = 'K';
             Print(board);
             bool flag2 = false;
 
@@ -295,7 +295,7 @@ namespace KingSurvival
   
         private static bool RunGame(char[,] m, bool flag2)
         {
-            while (car.Y > 0 && car.Y < size && !flag2)
+            while (king.Y > 0 && king.Y < size && !flag2)
             {
                 flag = true;
                 while (flag)
