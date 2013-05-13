@@ -3,3 +3,5 @@ C:\Users\Yanko Malinov\Desktop\stuff\King-Survival-7\bin\Debug\KingSurvival.pdb
 C:\Users\Yanko Malinov\Desktop\stuff\King-Survival-7\obj\Debug\KingSurvival.csprojResolveAssemblyReference.cache
 C:\Users\Yanko Malinov\Desktop\stuff\King-Survival-7\obj\Debug\KingSurvival.exe
 C:\Users\Yanko Malinov\Desktop\stuff\King-Survival-7\obj\Debug\KingSurvival.pdb
+D:\TELERIK\HCC\Teamwork\King-Survival-7\obj\Debug\KingSurvival.exe
+D:\TELERIK\HCC\Teamwork\King-Survival-7\obj\Debug\KingSurvival.pdb

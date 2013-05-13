@@ -4,6 +4,7 @@ namespace KingSurvival
 {
     class KingSurvival
     {
+        // for git connection test *will be removed
         static int size = 8;
         static Coordinates car = new Coordinates(4, 3);
 
