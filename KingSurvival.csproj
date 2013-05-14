@@ -67,9 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChessPiece.cs" />
     <Compile Include="Coordinates.cs" />
-    <Compile Include="KingSurvival.cs" />
-    <Compile Include="Pawn.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="King.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
