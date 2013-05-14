@@ -2,28 +2,28 @@
 {
     class Coordinates
     {
-        int x;
-        int y;
+        int xCoord;
+        int yCoord;
 
         public Coordinates()
         {
-            this.x = 0;
-            this.y = 0;
+            this.xCoord = 0;
+            this.yCoord = 0;
         }
         public Coordinates(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            this.xCoord = x;
+            this.yCoord = y;
         }
         public int X
         {
-            get { return x; }
-            set { x = value; }
+            get { return xCoord; }
+            set { xCoord = value; }
         }
         public int Y
         {
-            get { return y; }
-            set { y = value; }
+            get { return yCoord; }
+            set { yCoord = value; }
         }
     }
 }
