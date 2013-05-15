@@ -1,5 +1,0 @@
-﻿enum Player
-{
-    King,
-    Pawn,
-}
