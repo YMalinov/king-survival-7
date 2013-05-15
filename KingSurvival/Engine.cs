@@ -46,7 +46,7 @@ namespace KingSurvival
             this.boardRenderer.Render();
         }
 
-        private Coordinates extractDirectionFromCommand(string cmd)
+        private Coordinates ExtractDirectionFromCommand(string cmd)
         {
             string directionFromCommand = cmd.Substring(1);
             Coordinates direction = directions[directionFromCommand];
@@ -54,7 +54,7 @@ namespace KingSurvival
             return direction;
         }
 
-        private bool isValidPawnCommand(string cmd)
+        private bool IsValidPawnCommand(string cmd)
         {
             if (cmd.Length != 3)
             {
@@ -68,7 +68,7 @@ namespace KingSurvival
             return validFirstChar && validSecondChar && validThirdChar;
         }
 
-        private bool isValidKingCommand(string cmd)
+        private bool IsValidKingCommand(string cmd)
         {
             if (cmd.Length != 3)
             {
@@ -169,9 +169,9 @@ namespace KingSurvival
 
                     string input = UserInput.GetInput(Player.King);
 
-                    if (isValidKingCommand(input))
+                    if (IsValidKingCommand(input))
                     {
-                        Coordinates direction = extractDirectionFromCommand(input);
+                        Coordinates direction = ExtractDirectionFromCommand(input);
                         Coordinates newCoords = new Coordinates(chessPieces[KingSymbol].X + direction.X, chessPieces[KingSymbol].Y + direction.Y);
 
                         if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
@@ -204,9 +204,9 @@ namespace KingSurvival
 
                     string input = UserInput.GetInput(Player.Pawn);
 
-                    if (isValidPawnCommand(input))
+                    if (IsValidPawnCommand(input))
                     {
-                        Coordinates direction = extractDirectionFromCommand(input);
+                        Coordinates direction = ExtractDirectionFromCommand(input);
                         Coordinates newCoords = new Coordinates(chessPieces[input[0]].X + direction.X, chessPieces[input[0]].Y + direction.Y);
                         if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
                         {
