@@ -3,15 +3,21 @@ using System.Collections.Generic;
 
 class Engine
 {
-    int size = 0;
+    private const char PawnASymbol = 'A';
+    private const char PawnBSymbol = 'B';
+    private const char PawnCSymbol = 'C';
+    private const char PawnDSymbol = 'D';
+
+    private const char KingSymbol = 'K';
 
     Dictionary<char, ChessPiece> chessPieces = new Dictionary<char, ChessPiece>()
     {
-        { 'A', new ChessPiece('A', 0, 0) },
-        { 'B', new ChessPiece('B', 2, 0) },
-        { 'C', new ChessPiece('C', 4, 0) },
-        { 'D', new ChessPiece('D', 6, 0) },
-        { 'K', new ChessPiece('K', 3, 7) }
+        { PawnASymbol, new ChessPiece(PawnASymbol, 0, 0) },
+        { PawnBSymbol, new ChessPiece(PawnBSymbol, 2, 0) },
+        { PawnCSymbol, new ChessPiece(PawnCSymbol, 4, 0) },
+        { PawnDSymbol, new ChessPiece(PawnDSymbol, 6, 0) },
+
+        { KingSymbol, new ChessPiece(KingSymbol, 3, 7) }
     };
 
     Dictionary<string, Coordinates> directions = new Dictionary<string, Coordinates>()
@@ -19,20 +25,16 @@ class Engine
         { "UL", new Coordinates(-1, -1) }, { "UR", new Coordinates(1, -1) },
         { "DL", new Coordinates(-1,  1) }, { "DR", new Coordinates(1,  1) }
     };
-    
-    bool stopGame = false;
 
     BoardRenderer boardRenderer;
 
     public Engine(int boardSize)
     {
-        this.size = boardSize;
         this.boardRenderer = new BoardRenderer(boardSize);
     }
 
     public Engine(char[,] board)
     {
-        this.size = board.GetLength(0);
         this.boardRenderer = new BoardRenderer(board);
     }
 
@@ -71,7 +73,7 @@ class Engine
             return false;
         }
 
-        bool validFirstChar = cmd[0] == 'K';
+        bool validFirstChar = cmd[0] == KingSymbol;
         bool validSecondChar = cmd[1] == 'U' || cmd[1] == 'D';
         bool validThirdChar = cmd[2] == 'L' || cmd[2] == 'R';
 
@@ -80,8 +82,8 @@ class Engine
 
     private bool areValidCoordinates(Coordinates coordinates)
     {
-        bool isWidthInScreen = (0 < coordinates.X) && (coordinates.X < size - 1);
-        bool isHeightInScreen = (0 < coordinates.Y) && (coordinates.Y < size - 1);
+        bool isWidthInScreen = (0 <= coordinates.X) && (coordinates.X < boardRenderer.Size);
+        bool isHeightInScreen = (0 <= coordinates.Y) && (coordinates.Y < boardRenderer.Size);
 
         return isWidthInScreen && isHeightInScreen;
     }
@@ -101,7 +103,7 @@ class Engine
 
     private bool isKingBlocked()
     {
-        Coordinates kingCoords = chessPieces['K'].Coordinates;
+        Coordinates kingCoords = chessPieces[KingSymbol].Coordinates;
 
         foreach (var direction in directions)
         {
@@ -120,18 +122,23 @@ class Engine
         return true;
     }
 
+    private bool isKingOnFirstLine()
+    {
+        return chessPieces[KingSymbol].Y == 0;
+    }
+
     private bool allPawnsOnLastLine()
     {
         bool allAtLastLine = true;
 
         foreach (var pawn in chessPieces)
         {
-            if (pawn.Value.Symbol == 'K')
+            if (pawn.Value.Symbol == KingSymbol)
             {
                 continue;
             }
 
-            allAtLastLine &= (pawn.Value.Y == size - 1);
+            allAtLastLine &= (pawn.Value.Y == boardRenderer.Size - 1);
         }
 
         return allAtLastLine;
@@ -143,15 +150,10 @@ class Engine
         chessPieces[currentPiece].X = dirX;
     }
 
-    private void illegalMoveScreen()
+    public void Run()
     {
-        Console.WriteLine("Illegal move!");
-        Console.ReadKey();
-    }
-
-    public bool Run()
-    {
-        while (chessPieces['K'].Y > 0 && chessPieces['K'].Y < size && !stopGame)
+        int moves = 0;
+        while (true)
         {
             while (true)
             {
@@ -159,49 +161,47 @@ class Engine
 
                 if (isKingBlocked())
                 {
-                    Console.WriteLine("King loses!");
+                    boardRenderer.WriteMessage(Message.KingLose);
                     Environment.Exit(0);
                 }
 
-                Console.Write("King's Turn: ");
-                string input = Console.ReadLine();
+                string input = UserInput.GetInput(Player.King);
 
-                input = input.ToUpper();
                 if (isValidKingCommand(input))
                 {
                     Coordinates direction = extractDirectionFromCommand(input);
-                    Coordinates newCoords = new Coordinates(chessPieces['K'].X + direction.X, chessPieces['K'].Y + direction.Y);
+                    Coordinates newCoords = new Coordinates(chessPieces[KingSymbol].X + direction.X, chessPieces[KingSymbol].Y + direction.Y);
 
                     if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
                     {
-                        movePiece('K', newCoords.X, newCoords.Y);
+                        movePiece(KingSymbol, newCoords.X, newCoords.Y);
                         break;
                     }
                     else
                     {
-                        illegalMoveScreen();
+                        boardRenderer.WriteMessage(Message.InvalidMove);
                     }
                 }
                 else
                 {
-                    illegalMoveScreen();
+                    boardRenderer.WriteMessage(Message.InvalidMove);
                 }
             }
+
+            moves++;
 
             while (true)
             {
                 this.Print();
 
-                if (allPawnsOnLastLine())
+                if (allPawnsOnLastLine() || isKingOnFirstLine())
                 {
-                    Console.WriteLine("King wins!");
+                    boardRenderer.WriteMessage(Message.KingWin, moves);
                     Environment.Exit(0);
                 }
 
-                Console.Write("Pawns' turn: ");
-                string input = Console.ReadLine();
+                string input = UserInput.GetInput(Player.Pawn);
 
-                input = input.ToUpper();
                 if (isValidPawnCommand(input))
                 {
                     Coordinates direction = extractDirectionFromCommand(input);
@@ -213,18 +213,18 @@ class Engine
                     }
                     else
                     {
-                        illegalMoveScreen();
+                        boardRenderer.WriteMessage(Message.InvalidMove);
                     }
                 }
                 else
                 {
-                    illegalMoveScreen();
+                    boardRenderer.WriteMessage(Message.InvalidMove);
                 }
 
                 this.Print();
             }
-        }
 
-        return stopGame;
+            moves++;
+        }
     }
 }

@@ -71,9 +71,10 @@
     <Compile Include="BoardRenderer.cs" />
     <Compile Include="Coordinates.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="IDrawable.cs" />
-    <Compile Include="IRenderer.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

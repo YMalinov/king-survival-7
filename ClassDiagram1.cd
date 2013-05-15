@@ -6,7 +6,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAaAA=</HashCode>
       <FileName>ChessPiece.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Coordinates" Collapsed="true">
     <Position X="3" Y="0.5" Width="1.5" />
@@ -18,7 +17,7 @@
   <Class Name="Engine" Collapsed="true">
     <Position X="3" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAJAACAIAAAACAgAgEAAAABAAAiABEAAo=</HashCode>
+      <HashCode>AAAAAEAAAIAAIAECAAAgAACAAAiEQAAABAAAiABEAAo=</HashCode>
       <FileName>Engine.cs</FileName>
     </TypeIdentifier>
   </Class>

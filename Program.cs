@@ -11,15 +11,6 @@ class Program
 
         engine.Print();
 
-        bool whoWon = engine.Run();
-
-        if (whoWon)
-        {
-            Console.WriteLine("Pawn's win!");
-        }
-        else
-        {
-            Console.WriteLine("King's win!");
-        }
+        engine.Run();
     }
 }

@@ -7,29 +7,25 @@ class BoardRenderer
     private const char WhiteCell = '-';
     private const char BlackCell = '+';
 
-    private char[,] initialBoard = null;
-
-    private char[,] board = null;
-    public char[,] Board
-    {
-        get
-        {
-            return board;
-        }
-        private set
-        {
-            this.board = value;
-        }
-    }
+    private char[,] emptyBoard = null;
+    private char[,] populatedBoard = null;
 
     public BoardRenderer(int size)
     {
-        this.initialBoard = GenerateBoard(size);
+        this.emptyBoard = GenerateBoard(size);
     }
 
     public BoardRenderer(char[,] board)
     {
-        this.initialBoard = board;
+        this.emptyBoard = board;
+    }
+
+    public int Size
+    {
+        get
+        {
+            return emptyBoard.GetLength(0);
+        }
     }
 
     private char[,] GenerateBoard(int size)
@@ -70,19 +66,49 @@ class BoardRenderer
 
     public void PopulateBoard(Dictionary<char, ChessPiece> pieces)
     {
-        this.board = (char[,])this.initialBoard.Clone();
+        this.populatedBoard = (char[,])this.emptyBoard.Clone();
 
         foreach (var piece in pieces)
         {
-            this.board[piece.Value.X, piece.Value.Y] = piece.Value.Symbol;
+            this.populatedBoard[piece.Value.X, piece.Value.Y] = piece.Value.Symbol;
         }
+    }
+
+    public void WriteMessage(Message msg, int moves = 0)
+    {
+        string messageAsString = "";
+        switch (msg)
+        {
+            case Message.InvalidMove:
+                {
+                    messageAsString = "Illegal move!";
+                    break;
+                }
+            case Message.KingWin:
+                {
+                    messageAsString = string.Format("King wins in {0} turns.", moves);
+                    break;
+                }
+            case Message.KingLose:
+                {
+                    messageAsString = string.Format("King loses");
+                    break;
+                }
+            default:
+                {
+                    throw new ArgumentException("Not a recognized message!");
+                }
+        }
+
+        Console.WriteLine(messageAsString);
+        Console.ReadKey();
     }
 
     public void Render()
     {
         Console.Clear();
 
-        int len = board.GetLength(0);
+        int len = populatedBoard.GetLength(0);
 
         StringBuilder output = new StringBuilder();
 
@@ -93,7 +119,7 @@ class BoardRenderer
         }
         output.Append('\n');
 
-        string border = string.Format("{0}{1}\n", new string(' ', 3), new string('-', board.GetLength(0) * 2 + 1));
+        string border = string.Format("{0}{1}\n", new string(' ', 3), new string('-', populatedBoard.GetLength(0) * 2 + 1));
         output.Append(border);
 
         for (int row = 0; row < len; row++)
@@ -101,7 +127,7 @@ class BoardRenderer
             output.AppendFormat("{0} | ", row);
             for (int col = 0; col < len; col++)
             {
-                output.Append(board[col, row] + " ");
+                output.Append(populatedBoard[col, row] + " ");
             }
 
             output.Append("|\n");
