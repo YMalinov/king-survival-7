@@ -68,9 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessPiece.cs" />
+    <Compile Include="BoardRenderer.cs" />
     <Compile Include="Coordinates.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="King.cs" />
+    <Compile Include="IDrawable.cs" />
+    <Compile Include="IRenderer.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

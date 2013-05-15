@@ -1,4 +1,4 @@
-﻿class ChessPiece
+﻿class ChessPiece : IDrawable
 {
     public char Symbol { get; private set; }
 
@@ -28,19 +28,15 @@
         }
     }
 
-    public bool InGame { get; set; }
-
     public ChessPiece(char symbol, Coordinates startingCoordinates)
     {
         this.Symbol = symbol;
         this.Coordinates = startingCoordinates;
-        this.InGame = true;
     }
 
     public ChessPiece(char symbol, int X, int Y)
     {
         this.Symbol = symbol;
         this.Coordinates = new Coordinates(X, Y);
-        this.InGame = true;
     }
 }

@@ -38,4 +38,32 @@
             yCoord = value; 
         }
     }
+
+    public override bool Equals(object obj)
+    {
+        Coordinates objAsMatrixCoords = obj as Coordinates;
+
+        if (obj == null)
+        {
+            return false;
+        }
+
+        return (this.X == objAsMatrixCoords.X) && 
+               (this.Y == objAsMatrixCoords.Y);
+    }
+
+    public static bool operator ==(Coordinates first, Coordinates second)
+    {
+        return first.Equals(second);
+    }
+
+    public static bool operator !=(Coordinates first, Coordinates second)
+    {
+        return !first.Equals(second);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

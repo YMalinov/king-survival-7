@@ -7,254 +7,224 @@ class Engine
 
     Dictionary<char, ChessPiece> chessPieces = new Dictionary<char, ChessPiece>()
     {
-        { 'A', new ChessPiece('A', 1, 0) },
-        { 'B', new ChessPiece('B', 3, 0) },
-        { 'C', new ChessPiece('C', 5, 0) },
-        { 'D', new ChessPiece('D', 7, 0) },
+        { 'A', new ChessPiece('A', 0, 0) },
+        { 'B', new ChessPiece('B', 2, 0) },
+        { 'C', new ChessPiece('C', 4, 0) },
+        { 'D', new ChessPiece('D', 6, 0) },
+        { 'K', new ChessPiece('K', 3, 7) }
     };
 
-    King king = new King(4, 7);
-
-    char[,] gameBoard = null;
-
-    bool IsKingTurn = true;
-
+    Dictionary<string, Coordinates> directions = new Dictionary<string, Coordinates>()
+    {
+        { "UL", new Coordinates(-1, -1) }, { "UR", new Coordinates(1, -1) },
+        { "DL", new Coordinates(-1,  1) }, { "DR", new Coordinates(1,  1) }
+    };
+    
     bool stopGame = false;
+
+    BoardRenderer boardRenderer;
+
+    public Engine(int boardSize)
+    {
+        this.size = boardSize;
+        this.boardRenderer = new BoardRenderer(boardSize);
+    }
 
     public Engine(char[,] board)
     {
         this.size = board.GetLength(0);
-        this.gameBoard = board;
-    }
-
-    private char[,] PopulateBoard(char[,] board)
-    {
-        foreach (var piece in chessPieces)
-        {
-            if (piece.Value.InGame)
-            {
-                board[piece.Value.Y, piece.Value.X] = piece.Value.Symbol;
-            }
-        }
-
-        board[king.Y, king.X] = king.Symbol;
-
-        return board;
+        this.boardRenderer = new BoardRenderer(board);
     }
 
     public void Print()
     {
-        Console.Clear();
-
-        char[,] board = (char[,])gameBoard.Clone();
-
-        board = PopulateBoard(board);
-
-        int height = board.GetLength(0);
-        int width = board.GetLength(1);
-
-        for (int row = 0; row < height; row++)
-        {
-            for (int col = 0; col < width; col++)
-            {
-                Console.Write("{0,2}", board[row, col]);
-            }
-
-            Console.WriteLine();
-        }
+        this.boardRenderer.PopulateBoard(chessPieces);
+        this.boardRenderer.Render();
     }
 
-    private bool MoveKing(int dirX, int dirY)
+    private Coordinates extractDirectionFromCommand(string cmd)
     {
-        if ((king.X + dirX < 0 || king.X + dirX > size - 1) ||
-            (king.Y + dirY < 0 || king.Y + dirY > size - 1))
-        {
-            Console.WriteLine("Invalid Move!");
-            Console.WriteLine("**Press a key to continue**");
-            Console.ReadKey();
-            IsKingTurn = true;
-            return false;
-        }
+        string directionFromCommand = cmd.Substring(1);
+        Coordinates direction = directions[directionFromCommand];
 
-        foreach (var piece in chessPieces)
-        {
-            if (king.Y + dirY == piece.Value.Y && 
-                king.X + dirX == piece.Value.X)
-            {
-                piece.Value.InGame = false;
-            }
-        }
-
-        if (king.X == 0)
-        {
-            return true;
-        }
-
-        king.Y += dirY;
-        king.X += dirX;
-
-        return false;
+        return direction;
     }
 
-    private bool MovePawn(char currentPawn, Coordinates direction)
-    {
-        if ((chessPieces[currentPawn].X + direction.X < 0 || chessPieces[currentPawn].X + direction.X > size - 1) ||
-            (chessPieces[currentPawn].Y + direction.Y < 0 || chessPieces[currentPawn].Y + direction.Y > size - 1))
-        {
-            Console.WriteLine("Invalid Move!");
-            Console.WriteLine("**Press a key to continue**");
-            Console.ReadKey();
-            IsKingTurn = false;
-            return false;
-        }
-
-        if (chessPieces[currentPawn].Y + direction.Y == king.Y && 
-            chessPieces[currentPawn].X + direction.X == king.X)
-        {
-            Console.WriteLine("Pawn's win!");
-            return true;
-        }
-
-        if (chessPieces[currentPawn].Y + direction.Y == chessPieces['A'].Y && chessPieces[currentPawn].X + direction.X == chessPieces['A'].X ||
-            chessPieces[currentPawn].Y + direction.Y == chessPieces['B'].Y && chessPieces[currentPawn].X + direction.X == chessPieces['B'].X ||
-            chessPieces[currentPawn].Y + direction.Y == chessPieces['C'].Y && chessPieces[currentPawn].X + direction.X == chessPieces['C'].X ||
-            chessPieces[currentPawn].Y + direction.Y == chessPieces['D'].Y && chessPieces[currentPawn].X + direction.X == chessPieces['D'].X)
-        {
-            Console.WriteLine("Invalid Move!");
-            Console.WriteLine("**Press a key to continue**");
-            Console.ReadKey();
-            IsKingTurn = false;
-            return false;
-        }
-
-        chessPieces[currentPawn].Y += direction.Y;
-        chessPieces[currentPawn].X += direction.X;
-        return false;
-    }
-
-    private void ExecuteCommand(string cmd)
-    {
-        int x = 0;
-        int y = 0;
-
-        switch (cmd[1])
-        {
-            case 'D':
-                {
-                    y = 1;
-                    break;
-                }
-            case 'U':
-                {
-                    y = -1;
-                    break;
-                }
-            default:
-                {
-                    throw new ArgumentException("Invalid command!");
-                }
-        }
-
-        switch (cmd[2])
-        {
-            case 'L':
-                {
-                    x = -1;
-                    break;
-                }
-            case 'R':
-                {
-                    x = 1;
-                    break;
-                }
-            default:
-                {
-                    throw new ArgumentException("Invalid command!");
-                }
-        }
-
-        if (cmd[0] == 'K')
-        {
-            stopGame = MoveKing(x, y);
-        }
-        else
-        {
-            stopGame = MovePawn(cmd[0], new Coordinates(x, y));
-        }
-    }
-
-    private bool isValidCommand(string cmd, bool isKing = false)
+    private bool isValidPawnCommand(string cmd)
     {
         if (cmd.Length != 3)
         {
             return false;
         }
 
-        bool validFirstChar = isKing ? (cmd[0] == 'K') : (cmd[0] == 'A' || cmd[0] == 'B' || cmd[0] == 'C' || cmd[0] == 'D');
-        bool validSecondChar = isKing ? (cmd[1] == 'U' || cmd[1] == 'D') : (cmd[1] == 'D');
+        bool validFirstChar = cmd[0] == 'A' || cmd[0] == 'B' || cmd[0] == 'C' || cmd[0] == 'D';
+        bool validSecondChar = cmd[1] == 'D';
         bool validThirdChar = cmd[2] == 'L' || cmd[2] == 'R';
-
-        if (validFirstChar && !isKing && !chessPieces[cmd[0]].InGame)
-        {
-            return false;
-        }
 
         return validFirstChar && validSecondChar && validThirdChar;
     }
 
+    private bool isValidKingCommand(string cmd)
+    {
+        if (cmd.Length != 3)
+        {
+            return false;
+        }
+
+        bool validFirstChar = cmd[0] == 'K';
+        bool validSecondChar = cmd[1] == 'U' || cmd[1] == 'D';
+        bool validThirdChar = cmd[2] == 'L' || cmd[2] == 'R';
+
+        return validFirstChar && validSecondChar && validThirdChar;
+    }
+
+    private bool areValidCoordinates(Coordinates coordinates)
+    {
+        bool isWidthInScreen = (0 < coordinates.X) && (coordinates.X < size - 1);
+        bool isHeightInScreen = (0 < coordinates.Y) && (coordinates.Y < size - 1);
+
+        return isWidthInScreen && isHeightInScreen;
+    }
+
+    private bool isOccupied(Coordinates coordinates)
+    {
+        foreach (var piece in chessPieces)
+        {
+            if (piece.Value.Coordinates == coordinates)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool isKingBlocked()
+    {
+        Coordinates kingCoords = chessPieces['K'].Coordinates;
+
+        foreach (var direction in directions)
+        {
+            Coordinates newCoords = new Coordinates(kingCoords.X + direction.Value.X, 
+                                                    kingCoords.Y + direction.Value.Y);
+
+            bool valid = areValidCoordinates(newCoords);
+            bool occupied = isOccupied(newCoords);
+
+            if (valid && !occupied)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool allPawnsOnLastLine()
+    {
+        bool allAtLastLine = true;
+
+        foreach (var pawn in chessPieces)
+        {
+            if (pawn.Value.Symbol == 'K')
+            {
+                continue;
+            }
+
+            allAtLastLine &= (pawn.Value.Y == size - 1);
+        }
+
+        return allAtLastLine;
+    }
+
+    private void movePiece(char currentPiece, int dirX, int dirY)
+    {
+        chessPieces[currentPiece].Y = dirY;
+        chessPieces[currentPiece].X = dirX;
+    }
+
+    private void illegalMoveScreen()
+    {
+        Console.WriteLine("Illegal move!");
+        Console.ReadKey();
+    }
+
     public bool Run()
     {
-        while (king.Y > 0 && king.Y < size && !stopGame)
+        while (chessPieces['K'].Y > 0 && chessPieces['K'].Y < size && !stopGame)
         {
-            IsKingTurn = true;
-            while (IsKingTurn)
+            while (true)
             {
-                IsKingTurn = false;
                 this.Print();
+
+                if (isKingBlocked())
+                {
+                    Console.WriteLine("King loses!");
+                    Environment.Exit(0);
+                }
 
                 Console.Write("King's Turn: ");
                 string input = Console.ReadLine();
 
                 input = input.ToUpper();
-
-                if (isValidCommand(input, true))
+                if (isValidKingCommand(input))
                 {
-                    ExecuteCommand(input);
+                    Coordinates direction = extractDirectionFromCommand(input);
+                    Coordinates newCoords = new Coordinates(chessPieces['K'].X + direction.X, chessPieces['K'].Y + direction.Y);
+
+                    if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
+                    {
+                        movePiece('K', newCoords.X, newCoords.Y);
+                        break;
+                    }
+                    else
+                    {
+                        illegalMoveScreen();
+                    }
                 }
                 else
                 {
-                    IsKingTurn = true;
-                    Console.WriteLine("Invalid input!");
-                    Console.WriteLine("**Press a key to continue**");
-                    Console.ReadKey();
+                    illegalMoveScreen();
                 }
             }
 
-            while (!IsKingTurn)
+            while (true)
             {
-                IsKingTurn = true;
                 this.Print();
 
-                Console.Write("Pawn's turn: ");
+                if (allPawnsOnLastLine())
+                {
+                    Console.WriteLine("King wins!");
+                    Environment.Exit(0);
+                }
+
+                Console.Write("Pawns' turn: ");
                 string input = Console.ReadLine();
 
                 input = input.ToUpper();
-
-                if (isValidCommand(input))
+                if (isValidPawnCommand(input))
                 {
-                    ExecuteCommand(input);
+                    Coordinates direction = extractDirectionFromCommand(input);
+                    Coordinates newCoords = new Coordinates(chessPieces[input[0]].X + direction.X, chessPieces[input[0]].Y + direction.Y);
+                    if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
+                    {
+                        movePiece(input[0], newCoords.X, newCoords.Y);
+                        break;
+                    }
+                    else
+                    {
+                        illegalMoveScreen();
+                    }
                 }
                 else
                 {
-                    IsKingTurn = false;
-                    Console.WriteLine("Invalid input!");
-                    Console.WriteLine("**Press a key to continue**");
-                    Console.ReadKey();
+                    illegalMoveScreen();
                 }
 
                 this.Print();
             }
         }
+
         return stopGame;
     }
 }
