@@ -103,7 +103,7 @@ namespace KingSurvival
             return false;
         }
 
-        private bool isKingBlocked()
+        private bool IsKingBlocked()
         {
             Coordinates kingCoords = chessPieces[KingSymbol].Coordinates;
 
@@ -161,7 +161,7 @@ namespace KingSurvival
                 {
                     this.Print();
 
-                    if (isKingBlocked())
+                    if (IsKingBlocked())
                     {
                         boardRenderer.WriteMessage(Message.KingLose);
                         Environment.Exit(0);
