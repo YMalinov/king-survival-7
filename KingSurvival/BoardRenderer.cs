@@ -89,7 +89,7 @@ namespace KingSurvival
 
             foreach (var piece in pieces)
             {
-                this.populatedBoard[piece.Value.X, piece.Value.Y] = piece.Value.Symbol;
+                this.populatedBoard[piece.Value.XCoord, piece.Value.YCoord] = piece.Value.Symbol;
             }
         }
 

@@ -17,7 +17,7 @@
             this.yCoord = y;
         }
 
-        public int X
+        public int XCoord
         {
             get
             {
@@ -29,7 +29,7 @@
             }
         }
 
-        public int Y
+        public int YCoord
         {
             get
             {
@@ -50,8 +50,8 @@
                 return false;
             }
 
-            return (this.X == objAsMatrixCoords.X) &&
-                   (this.Y == objAsMatrixCoords.Y);
+            return (this.XCoord == objAsMatrixCoords.XCoord) &&
+                   (this.YCoord == objAsMatrixCoords.YCoord);
         }
 
         public static bool operator ==(Coordinates first, Coordinates second)

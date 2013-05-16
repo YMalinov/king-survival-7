@@ -84,8 +84,8 @@ namespace KingSurvival
 
         private bool areValidCoordinates(Coordinates coordinates)
         {
-            bool isWidthInScreen = (0 <= coordinates.X) && (coordinates.X < boardRenderer.Size);
-            bool isHeightInScreen = (0 <= coordinates.Y) && (coordinates.Y < boardRenderer.Size);
+            bool isWidthInScreen = (0 <= coordinates.XCoord) && (coordinates.XCoord < boardRenderer.Size);
+            bool isHeightInScreen = (0 <= coordinates.YCoord) && (coordinates.YCoord < boardRenderer.Size);
 
             return isWidthInScreen && isHeightInScreen;
         }
@@ -109,8 +109,8 @@ namespace KingSurvival
 
             foreach (var direction in directions)
             {
-                Coordinates newCoords = new Coordinates(kingCoords.X + direction.Value.X,
-                                                        kingCoords.Y + direction.Value.Y);
+                Coordinates newCoords = new Coordinates(kingCoords.XCoord + direction.Value.XCoord,
+                                                        kingCoords.YCoord + direction.Value.YCoord);
 
                 bool valid = areValidCoordinates(newCoords);
                 bool occupied = isOccupied(newCoords);
@@ -126,7 +126,7 @@ namespace KingSurvival
 
         private bool isKingOnFirstLine()
         {
-            return chessPieces[KingSymbol].Y == 0;
+            return chessPieces[KingSymbol].YCoord == 0;
         }
 
         private bool allPawnsOnLastLine()
@@ -140,7 +140,7 @@ namespace KingSurvival
                     continue;
                 }
 
-                allAtLastLine &= (pawn.Value.Y == boardRenderer.Size - 1);
+                allAtLastLine &= (pawn.Value.YCoord == boardRenderer.Size - 1);
             }
 
             return allAtLastLine;
@@ -148,8 +148,8 @@ namespace KingSurvival
 
         private void movePiece(char currentPiece, int newX, int newY)
         {
-            chessPieces[currentPiece].X = newX;
-            chessPieces[currentPiece].Y = newY;
+            chessPieces[currentPiece].XCoord = newX;
+            chessPieces[currentPiece].YCoord = newY;
         }
 
         public void Run()
@@ -172,11 +172,11 @@ namespace KingSurvival
                     if (IsValidKingCommand(input))
                     {
                         Coordinates direction = ExtractDirectionFromCommand(input);
-                        Coordinates newCoords = new Coordinates(chessPieces[KingSymbol].X + direction.X, chessPieces[KingSymbol].Y + direction.Y);
+                        Coordinates newCoords = new Coordinates(chessPieces[KingSymbol].XCoord + direction.XCoord, chessPieces[KingSymbol].YCoord + direction.YCoord);
 
                         if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
                         {
-                            movePiece(KingSymbol, newCoords.X, newCoords.Y);
+                            movePiece(KingSymbol, newCoords.XCoord, newCoords.YCoord);
                             break;
                         }
                         else
@@ -207,10 +207,10 @@ namespace KingSurvival
                     if (IsValidPawnCommand(input))
                     {
                         Coordinates direction = ExtractDirectionFromCommand(input);
-                        Coordinates newCoords = new Coordinates(chessPieces[input[0]].X + direction.X, chessPieces[input[0]].Y + direction.Y);
+                        Coordinates newCoords = new Coordinates(chessPieces[input[0]].XCoord + direction.XCoord, chessPieces[input[0]].YCoord + direction.YCoord);
                         if (areValidCoordinates(newCoords) && !isOccupied(newCoords))
                         {
-                            movePiece(input[0], newCoords.X, newCoords.Y);
+                            movePiece(input[0], newCoords.XCoord, newCoords.YCoord);
                             break;
                         }
                         else

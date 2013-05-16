@@ -6,27 +6,27 @@
 
         public Coordinates Coordinates { get; set; }
 
-        public int X
+        public int XCoord
         {
             get
             {
-                return this.Coordinates.X;
+                return this.Coordinates.XCoord;
             }
             set
             {
-                this.Coordinates.X = value;
+                this.Coordinates.XCoord = value;
             }
         }
 
-        public int Y
+        public int YCoord
         {
             get
             {
-                return this.Coordinates.Y;
+                return this.Coordinates.YCoord;
             }
             set
             {
-                this.Coordinates.Y = value;
+                this.Coordinates.YCoord = value;
             }
         }
 
