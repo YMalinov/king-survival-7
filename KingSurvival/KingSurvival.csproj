@@ -71,9 +71,8 @@
     <Compile Include="BoardRenderer.cs" />
     <Compile Include="Coordinates.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="ZProgram.cs" />
+    <Compile Include="Enums\Message.cs" />
+    <Compile Include="Enums\Player.cs" />
     <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

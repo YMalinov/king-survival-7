@@ -55,8 +55,8 @@
     <Compile Include="ChessPiece.Test.cs" />
     <Compile Include="Coordinates.Test.cs" />
     <Compile Include="Engine.Test.cs" />
-    <Compile Include="Message.Test.cs" />
-    <Compile Include="Player.Test.cs" />
+    <Compile Include="Enums\Message.Test.cs" />
+    <Compile Include="Enums\Player.Test.cs" />
     <Compile Include="UserInput.Test.cs" />
   </ItemGroup>
   <ItemGroup>

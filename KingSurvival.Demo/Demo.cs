@@ -1,8 +1,9 @@
 ﻿using System;
+using KingSurvival;
 
-namespace KingSurvival
+namespace KingSurvival.Demo
 {
-    class ZProgram // the 'Z' is so that this file goes to the bottom when sorted
+    class Demo
     {
         static void Main()
         {

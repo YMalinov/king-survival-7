@@ -1,0 +1,7 @@
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\bin\Debug\KingSurvivalTest.dll
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\bin\Debug\KingSurvivalTest.pdb
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\bin\Debug\KingSurvival.exe
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\bin\Debug\KingSurvival.pdb
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\obj\Debug\KingSurvival.Test.csprojResolveAssemblyReference.cache
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\obj\Debug\KingSurvivalTest.dll
+E:\telerik\misc_repo\King-Survival-7\KingSurvival.Test\obj\Debug\KingSurvivalTest.pdb
