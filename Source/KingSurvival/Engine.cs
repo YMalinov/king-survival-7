@@ -119,7 +119,8 @@ namespace KingSurvival
                 return false;
             }
 
-            bool validFirstChar = cmd[0] == 'A' || cmd[0] == 'B' || cmd[0] == 'C' || cmd[0] == 'D';
+            bool validFirstChar = cmd[0] == PawnASymbol || cmd[0] == PawnBSymbol || 
+                                  cmd[0] == PawnCSymbol || cmd[0] == PawnDSymbol;
             bool validSecondChar = cmd[1] == 'D';
             bool validThirdChar = cmd[2] == 'L' || cmd[2] == 'R';
 
