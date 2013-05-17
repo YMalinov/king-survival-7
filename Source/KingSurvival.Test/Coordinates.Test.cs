@@ -27,5 +27,17 @@ namespace KingSurvivalTest
 
             Assert.IsTrue(Xchack&&Ycheck);
         }
+
+        [TestMethod]
+        public void TestCoordConstructor()
+        {
+            int checkX = 2;
+            int checkY = 3;
+            Coordinates fCoord = new Coordinates(2, 3);
+            bool testX = fCoord.XCoord == checkX;
+            bool testY = fCoord.YCoord == checkY;
+            Assert.IsTrue(testX && testY);
+
+        }
     }
 }

@@ -46,5 +46,14 @@ namespace KingSurvivalTest
             int y = 3;
             Assert.AreEqual(y, testPiece.YCoord);
         }
+
+        [TestMethod]
+        public void TestChestSymbolGetter()
+        {
+            char excpected = 'K';
+            ChessPiece testPiece = new ChessPiece(excpected, 2, 3);
+            bool check = testPiece.Symbol == excpected;
+            Assert.IsTrue(check);
+        }
     }
 }
