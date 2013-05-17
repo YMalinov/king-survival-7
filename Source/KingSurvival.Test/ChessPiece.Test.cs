@@ -12,10 +12,10 @@ namespace KingSurvivalTest
         {
             char excpected = 'K';
             Coordinates newCoordinates = new Coordinates(2,3);
-            int x = newCoordinates.X;
-            int y = newCoordinates.Y;
+            int x = newCoordinates.XCoord;
+            int y = newCoordinates.YCoord;
             ChessPiece testPiece = new ChessPiece(excpected,newCoordinates);
-            Assert.AreEqual(x, testPiece.X);
+            Assert.AreEqual(x, testPiece.XCoord);
         }
 
         [TestMethod]
@@ -23,10 +23,10 @@ namespace KingSurvivalTest
         {
             char excpected = 'K';
             Coordinates newCoordinates = new Coordinates(2, 3);
-            int x = newCoordinates.X;
-            int y = newCoordinates.Y;
+            int x = newCoordinates.XCoord;
+            int y = newCoordinates.YCoord;
             ChessPiece testPiece = new ChessPiece(excpected, newCoordinates);
-            Assert.AreEqual(y, testPiece.Y);
+            Assert.AreEqual(y, testPiece.YCoord);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace KingSurvivalTest
             char excpected = 'K';            
             ChessPiece testPiece = new ChessPiece(excpected, 2 ,3);
             int x = 2;
-            Assert.AreEqual(x, testPiece.X);
+            Assert.AreEqual(x, testPiece.XCoord);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace KingSurvivalTest
             char excpected = 'K';
             ChessPiece testPiece = new ChessPiece(excpected, 2, 3);
             int y = 3;
-            Assert.AreEqual(y, testPiece.Y);
+            Assert.AreEqual(y, testPiece.YCoord);
         }
     }
 }

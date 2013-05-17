@@ -8,8 +8,17 @@ namespace KingSurvivalTest
     public class PlayerTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestPlayerEnumarationKing()
         {
+            string invMove = "King";
+            Assert.AreEqual(invMove, Player.King.ToString());
+        }
+
+        [TestMethod]
+        public void TestPlayerEnumarationPawn()
+        {
+            string invMove = "Pawn";
+            Assert.AreEqual(invMove, Player.Pawn.ToString());
         }
     }
 }
