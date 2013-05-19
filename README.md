@@ -1,4 +1,4 @@
-King Survival 7
+####King Survival 7
 
 The King is initially located at row 7 and column 3 and the pawns are located at row 0 and columns 0, 2, 4 and 6. A pawn
 can only move at neighbor cell down-left or down-right, while the King can go to neighbor cells in 4 directions: 
